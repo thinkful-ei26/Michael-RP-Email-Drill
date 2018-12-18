@@ -6,7 +6,6 @@ import Sidebar from './sidebar';
 export function SingleEmail(props) {
     return (
     <div> 
-        <Sidebar />
         <div className="single-email">
             <div className="single-email-headers">
                 <h2 className="single-email-title">{props.title}</h2>
@@ -22,9 +21,9 @@ export function SingleEmail(props) {
 }
 
 const mapStateToProps = (state, props) => {
-    const { id } = props.match.params;
+    const { id, file } = props.match.params;
     console.log(id);
-    const singleEmail = state.inbox.emails[id]
+    const singleEmail = state[file].emails[id]
     return {
         title: singleEmail.title,
         from: singleEmail.from,

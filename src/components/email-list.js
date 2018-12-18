@@ -5,37 +5,37 @@ import Sidebar from './sidebar';
 import { Link } from 'react-router-dom';
 
 export function EmailList(props) {
-    const emails = props.emailList.map((email, index) =>
-        <li key={index} className="email-list-email">
+    const emails = props.emailList.map((email, index) =>{
+    const tempVar = `/${props.folderId}/${index}`;
+    return <li key={index} className="email-list-email">
             <div className="email-list-email-from">
                 {email.from}
             </div>
-            <Link to='/{props.id}'>
+            <Link to={tempVar}>
                 <div className="email-list-email-title">
                 {email.title}
                 </div>
             </Link>
         
         </li>
-    );
+    });
 
     return (
-        <div>
-            <Sidebar />
             <div className="folder">
                 <h2>{props.folderName}</h2>
                 <ul className="email-list">
                     {emails}
                 </ul>
-            </div>
-        </div>
-        
+            </div> 
     );
 }
 
 const mapStateToProps = (state, props) => {
-    const folder = state.inbox;
+    const {file} = props.match.params;
+    const folder = state[file];
+    console.log(folder);
     return {
+        folderId: folder.id,
         folderName: folder.name,
         emailList: Object.keys(folder.emails).map(emailId =>
             folder.emails[emailId]
